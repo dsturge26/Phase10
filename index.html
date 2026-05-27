@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Phase 10 Scoreboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Setup Screen -->
+    <div id="setup-screen" class="screen active">
+      <div class="setup-container">
+        <h1 class="logo">Phase <span class="ten">10</span></h1>
+        <p class="subtitle">Scoreboard</p>
+
+        <div class="setup-section">
+          <label class="setup-label">Number of Players</label>
+          <div class="player-count-picker">
+            <button class="count-btn" data-count="2">2</button>
+            <button class="count-btn active" data-count="3">3</button>
+            <button class="count-btn" data-count="4">4</button>
+            <button class="count-btn" data-count="5">5</button>
+            <button class="count-btn" data-count="6">6</button>
+          </div>
+        </div>
+
+        <div class="setup-section">
+          <label class="setup-label">Player Names</label>
+          <div id="player-names-list"></div>
+        </div>
+
+        <button id="start-game-btn" class="btn btn-primary btn-large">Start Game</button>
+
+        <div id="resume-section" class="setup-section" style="display:none;">
+          <button id="resume-game-btn" class="btn btn-secondary btn-large">Resume Saved Game</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+      <header class="game-header">
+        <h1 class="game-title">Phase <span class="ten">10</span></h1>
+        <div class="header-actions">
+          <button id="phase-ref-btn" class="btn btn-icon" title="Phase Reference">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </button>
+          <button id="undo-btn" class="btn btn-icon" title="Undo Last Round" disabled>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          </button>
+          <button id="new-game-btn" class="btn btn-icon" title="New Game">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Standings -->
+      <section id="standings-section" class="section">
+        <h2 class="section-title">Standings <span id="round-indicator" class="round-badge">Round 0</span></h2>
+        <div id="standings-list" class="standings-list"></div>
+      </section>
+
+      <!-- Score Entry -->
+      <section id="score-entry-section" class="section">
+        <h2 class="section-title">Enter Round Scores</h2>
+        <div id="score-entries"></div>
+        <button id="submit-round-btn" class="btn btn-primary btn-large">Submit Round</button>
+      </section>
+
+      <!-- Round History -->
+      <section id="history-section" class="section">
+        <h2 class="section-title">Round History</h2>
+        <div id="history-table-wrapper" class="history-wrapper">
+          <p class="empty-history">No rounds played yet.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="game-over-overlay" class="overlay" style="display:none;">
+      <div class="overlay-content">
+        <div class="winner-crown">&#x1F451;</div>
+        <h2 class="winner-title">Game Over!</h2>
+        <p id="winner-name" class="winner-name"></p>
+        <p id="winner-details" class="winner-details"></p>
+        <div id="final-standings" class="final-standings"></div>
+        <button id="play-again-btn" class="btn btn-primary btn-large">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Phase Reference Modal -->
+    <div id="phase-ref-modal" class="overlay" style="display:none;">
+      <div class="overlay-content phase-ref-content">
+        <h2>Phase Reference</h2>
+        <ol class="phase-list">
+          <li>2 Sets of 3</li>
+          <li>1 Set of 3 + 1 Run of 4</li>
+          <li>1 Set of 4 + 1 Run of 4</li>
+          <li>1 Run of 7</li>
+          <li>1 Run of 8</li>
+          <li>1 Run of 9</li>
+          <li>2 Sets of 4</li>
+          <li>7 Cards of One Color</li>
+          <li>1 Set of 5 + 1 Set of 2</li>
+          <li>1 Set of 5 + 1 Set of 3</li>
+        </ol>
+        <div class="point-values">
+          <h3>Card Point Values</h3>
+          <div class="point-grid">
+            <span class="point-item"><b>1–9</b> = 5 pts</span>
+            <span class="point-item"><b>10–12</b> = 10 pts</span>
+            <span class="point-item"><b>Skip</b> = 15 pts</span>
+            <span class="point-item"><b>Wild</b> = 25 pts</span>
+          </div>
+        </div>
+        <button id="close-phase-ref" class="btn btn-secondary btn-large">Close</button>
+      </div>
+    </div>
+
+    <!-- Confirm New Game Modal -->
+    <div id="confirm-modal" class="overlay" style="display:none;">
+      <div class="overlay-content confirm-content">
+        <h2>Start New Game?</h2>
+        <p>This will end the current game. Are you sure?</p>
+        <div class="confirm-actions">
+          <button id="confirm-yes" class="btn btn-danger">Yes, New Game</button>
+          <button id="confirm-no" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
