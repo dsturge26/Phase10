@@ -125,12 +125,15 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }
 
+  var nextRoundNumber = $('#next-round-number');
+
   // ===== Render game =====
   function renderGame() {
     renderStandings();
     renderScoreEntry();
     renderHistory();
     roundIndicator.textContent = 'Round ' + state.rounds.length;
+    nextRoundNumber.textContent = state.rounds.length + 1;
     undoBtn.disabled = state.rounds.length === 0;
 
     if (state.gameOver) {
@@ -196,6 +199,10 @@
         ? 'Done'
         : 'Phase ' + player.phase;
 
+      var goalText = finished
+        ? ''
+        : 'Goal: ' + PHASES[player.phase - 1];
+
       card.innerHTML =
         '<div class="score-entry-header">' +
           '<span class="score-entry-player">' + escapeHtml(player.name) + '</span>' +
@@ -203,14 +210,15 @@
         '</div>' +
         (finished
           ? ''
-          : '<div class="score-entry-body">' +
+          : '<div class="score-entry-goal">' + goalText + '</div>' +
+            '<div class="score-entry-body">' +
               '<div class="score-input-wrapper">' +
                 '<label>Points</label>' +
                 '<input type="number" inputmode="numeric" pattern="[0-9]*" class="score-input" ' +
                   'data-player="' + i + '" min="0" value="0">' +
               '</div>' +
               '<div class="phase-toggle">' +
-                '<label>Phase</label>' +
+                '<label>Completed?</label>' +
                 '<button type="button" class="toggle-btn" data-player="' + i + '" data-completed="false"></button>' +
               '</div>' +
             '</div>');
@@ -279,8 +287,7 @@
     saveState();
     renderGame();
 
-    // Scroll to standings
-    standingsList.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // ===== Undo =====

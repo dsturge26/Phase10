@@ -48,11 +48,11 @@
           <button id="phase-ref-btn" class="btn btn-icon" title="Phase Reference">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
           </button>
-          <button id="undo-btn" class="btn btn-icon" title="Undo Last Round" disabled>
+          <button id="undo-btn" class="btn btn-icon btn-icon-undo" title="Undo Last Round" disabled>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
           </button>
-          <button id="new-game-btn" class="btn btn-icon" title="New Game">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <button id="new-game-btn" class="btn btn-icon btn-icon-new" title="New Game">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
           </button>
         </div>
       </header>
@@ -65,7 +65,7 @@
 
       <!-- Score Entry -->
       <section id="score-entry-section" class="section">
-        <h2 class="section-title">Enter Round Scores</h2>
+        <h2 class="section-title">Round <span id="next-round-number">1</span> — Enter Scores</h2>
         <div id="score-entries"></div>
         <button id="submit-round-btn" class="btn btn-primary btn-large">Submit Round</button>
       </section>
