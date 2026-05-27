@@ -213,26 +213,13 @@
           : '<div class="score-entry-goal">' + goalText + '</div>' +
             '<div class="score-entry-body">' +
               '<div class="score-input-wrapper">' +
-                '<label>Points</label>' +
+                '<label>Points (0 = completed phase)</label>' +
                 '<input type="number" inputmode="numeric" pattern="[0-9]*" class="score-input" ' +
-                  'data-player="' + i + '" min="0" value="0">' +
-              '</div>' +
-              '<div class="phase-toggle">' +
-                '<label>Completed?</label>' +
-                '<button type="button" class="toggle-btn" data-player="' + i + '" data-completed="false"></button>' +
+                  'data-player="' + i + '" min="0" value="">' +
               '</div>' +
             '</div>');
 
       scoreEntries.appendChild(card);
-    });
-
-    // Toggle listeners
-    scoreEntries.querySelectorAll('.toggle-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var completed = this.dataset.completed === 'true';
-        this.dataset.completed = (!completed).toString();
-        this.classList.toggle('completed');
-      });
     });
 
     // Select all on focus for score inputs
@@ -256,11 +243,10 @@
       activePlayers++;
 
       var scoreInput = scoreEntries.querySelector('.score-input[data-player="' + i + '"]');
-      var toggleBtn = scoreEntries.querySelector('.toggle-btn[data-player="' + i + '"]');
 
       var points = parseInt(scoreInput.value) || 0;
       if (points < 0) points = 0;
-      var completed = toggleBtn.dataset.completed === 'true';
+      var completed = points === 0;
 
       roundData.push({ points: points, completedPhase: completed, skipped: false });
     });

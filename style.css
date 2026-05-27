@@ -439,52 +439,6 @@ body {
   border-color: var(--primary);
 }
 
-.phase-toggle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-}
-
-.phase-toggle label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.toggle-btn {
-  width: 64px;
-  height: 52px;
-  border-radius: var(--radius-sm);
-  border: 2px solid var(--surface);
-  background: var(--bg-input);
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.toggle-btn.completed {
-  border-color: var(--green);
-  background: var(--green-soft);
-  color: var(--green);
-}
-
-.toggle-btn.completed::after {
-  content: '✓';
-  font-size: 1.5rem;
-}
-
-.toggle-btn:not(.completed)::after {
-  content: '✗';
-  font-size: 1.5rem;
-}
-
 .score-entry-card.finished-phase {
   opacity: 0.5;
   pointer-events: none;
